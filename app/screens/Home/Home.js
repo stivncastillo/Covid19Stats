@@ -1,15 +1,27 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Switch } from 'react-native'
+import styled from 'styled-components/native'
+import { useTheme } from '../../utils/ThemeContext'
 
 const Home = () => {
-    return (
-        <View>
-            <Text>Home</Text>
-        </View>
-    )
+  const theme = useTheme()
+  console.log("Home -> theme", theme)
+
+  return (
+    <Container>
+      <Switch
+        value={theme.mode === 'dark'}
+        onValueChange={value => theme.setMode(value ? 'dark' : 'light')}
+      />
+    </Container>
+  )
 }
-// navigation.navigate('Tabs', {
-//     screen: 'Actions',
-//     params: { userId: 123 },
-//   });
+
+const Container = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background: ${props => props.theme.background};
+`
+
 export default Home

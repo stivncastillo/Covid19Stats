@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -10,6 +10,7 @@ import Home from '../screens/Home/Home';
 import Settings from '../screens/Settings/Settings';
 import News from '../screens/News/News';
 import SelectCountry from '../screens/SelectCountry/SelectCountry';
+import About from '../screens/About/About';
 
 const HomeStack = createStackNavigator();
 const HomeStackScreen = () => (
@@ -22,6 +23,7 @@ const SettingsStack = createStackNavigator();
 const SettingsStackScreen = () => (
   <SettingsStack.Navigator>
     <SettingsStack.Screen name="Settings" component={Settings} />
+    <SettingsStack.Screen name="About" component={About} />
   </SettingsStack.Navigator>
 );
 
@@ -79,7 +81,7 @@ const RootStackScreen = () => {
   React.useEffect(() => {
     setTimeout(() => {
       setIsLoading(!isLoading);
-    }, 500);
+    }, 2000);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

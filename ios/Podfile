@@ -38,6 +38,10 @@ target 'Covid19Stats' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+
+
+  pod 'react-native-appearance', :path => '../node_modules/react-native-appearance'
+
   target 'Covid19StatsTests' do
     inherit! :search_paths
     # Pods for testing

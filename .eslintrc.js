@@ -4,6 +4,7 @@ module.exports = {
   rules: {
     "prettier/prettier": "off",
     "semi": "off",
-    "eslint(react-hooks/exhaustive-deps": "off"
+    "eslint(react-hooks/exhaustive-deps": "off",
+    "react-native/no-inline-styles": "off"
   }
 };
