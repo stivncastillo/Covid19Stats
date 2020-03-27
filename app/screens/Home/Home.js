@@ -8,5 +8,8 @@ const Home = () => {
         </View>
     )
 }
-
+// navigation.navigate('Tabs', {
+//     screen: 'Actions',
+//     params: { userId: 123 },
+//   });
 export default Home

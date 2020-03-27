@@ -3,6 +3,7 @@ module.exports = {
   extends: '@react-native-community',
   rules: {
     "prettier/prettier": "off",
-    "semi": "off"
+    "semi": "off",
+    "eslint(react-hooks/exhaustive-deps": "off"
   }
 };

@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-// import Icon from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Feather';
 
 import Splash from '../screens/Splash/Splash';
@@ -16,13 +15,6 @@ const HomeStack = createStackNavigator();
 const HomeStackScreen = () => (
   <HomeStack.Navigator>
     <HomeStack.Screen name="Home" component={Home} />
-    <HomeStack.Screen name="SelectCountry" component={SelectCountry} />
-    <HomeStack.Screen
-      name="Splash"
-      component={Splash}
-      options={{
-        headerShown: false,
-      }} />
   </HomeStack.Navigator>
 );
 
@@ -67,8 +59,55 @@ const AppTabsScreen = () => (
   </AppTabs.Navigator>
 );
 
-export default () => (
-  <NavigationContainer>
-    <AppTabsScreen />
-  </NavigationContainer>
+const AppStack = createStackNavigator();
+const AppStackScreen = () => (
+  <AppStack.Navigator>
+    <AppStack.Screen
+      name="Splash"
+      component={Splash}
+      options={{
+        headerShown: false,
+        tabBarVisible: false,
+      }}/>
+  </AppStack.Navigator>
 );
+
+const RootStack = createStackNavigator();
+const RootStackScreen = () => {
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(!isLoading);
+    }, 500);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <RootStack.Navigator
+      headerMode="none"
+      screenOptions={{ animationEnabled: false }}
+      mode="modal"
+    >
+      {isLoading ? (
+        <RootStack.Screen name="AppStackScreen" component={AppStackScreen} />
+      ) :
+        <RootStack.Screen name="AppTabsScreen" component={AppTabsScreen} />
+      }
+
+      <RootStack.Screen
+        name="SelectCountry"
+        component={SelectCountry}
+        options={{ animationEnabled: true }}
+      />
+    </RootStack.Navigator>
+  );
+};
+
+export default () => {
+  return (
+    <NavigationContainer>
+      <RootStackScreen />
+    </NavigationContainer>
+  );
+};
