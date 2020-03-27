@@ -1,10 +1,4 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React from 'react';
+import Navigation from './config/navigation';
 
-export default () => {
-  return (
-    <View>
-      <Text>Putos</Text>
-    </View>
-  )
-}
+export default () => <Navigation />;
