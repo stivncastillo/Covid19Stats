@@ -109,7 +109,8 @@ const RootStackScreen = () => {
 export default () => {
   return (
     <NavigationContainer>
-      <RootStackScreen />
+        <AppStackScreen />
+      {/* <RootStackScreen /> */}
     </NavigationContainer>
   );
 };

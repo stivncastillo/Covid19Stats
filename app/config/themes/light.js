@@ -6,6 +6,7 @@ const light = {
     backgroundAlt: '#eaeaeb',
     borderAlt: '#bdbdbd',
     text: '#171717',
+    textMuted: '#D2D2D2',
   },
 }
 

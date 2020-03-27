@@ -3,9 +3,9 @@ import { View, Text, Switch } from 'react-native'
 import styled from 'styled-components/native'
 import { useTheme } from '../../utils/ThemeContext'
 
-const Home = () => {
+const Home = (props) => {
   const theme = useTheme()
-  console.log("Home -> theme", theme)
+  console.log(props)
 
   return (
     <Container>

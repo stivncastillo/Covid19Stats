@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react'
-import { StatusBar } from 'react-native'
+import { StatusBar, SafeAreaView } from 'react-native'
 import { ThemeProvider } from 'styled-components/native'
 import { Appearance, AppearanceProvider } from 'react-native-appearance'
 import lightTheme from '../config/themes/light'
@@ -16,15 +16,18 @@ export const useTheme = () => React.useContext(ThemeContext)
 
 const ManageThemeProvider = ({ children }) => {
   const [themeState, setThemeState] = useState(defaultMode)
+
   const setMode = mode => {
     setThemeState(mode)
   }
+
   useEffect(() => {
     const subscription = Appearance.addChangeListener(({ colorScheme }) => {
       setThemeState(colorScheme)
     })
     return () => subscription.remove()
   }, [])
+
   return (
     <ThemeContext.Provider value={{ mode: themeState, setMode }}>
       <ThemeProvider
@@ -33,7 +36,13 @@ const ManageThemeProvider = ({ children }) => {
           <StatusBar
             barStyle={themeState === 'dark' ? 'light-content' : 'dark-content'}
           />
-          {children}
+          <SafeAreaView style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}>
+            {children}
+          </SafeAreaView>
         </>
       </ThemeProvider>
     </ThemeContext.Provider>

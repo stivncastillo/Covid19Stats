@@ -1,15 +1,26 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React from 'react';
+import styled from 'styled-components/native';
+import { View, Text, Image } from 'react-native';
+import { CenterContainer } from '../../components';
 
-const Splash = ({ navigation }) => {
 
-  // if the country its no selected show modal
-  // navigation.navigate('SelectCountry');
+import styles from './styles';
 
+const TextAuthor = styled.Text`
+  color: ${props => props.theme.textMuted};
+`
+
+const Splash = (props) => {
   return (
-    <View>
-      <Text onPress={() => navigation.navigate('Tab')}>Splash</Text>
-    </View>
+    <CenterContainer>
+        <Image
+          style={styles.image}
+          resizeMode="contain"
+          source={require('../../../assets/Logo.png')}
+        />
+
+        <TextAuthor> Develop by Stiven Castillo </TextAuthor>
+    </CenterContainer>
   )
 }
 

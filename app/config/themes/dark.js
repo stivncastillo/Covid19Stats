@@ -4,7 +4,8 @@ const dark = {
     border: '#575c66',
     backgroundAlt: '#575c66',
     borderAlt: '#2E3440',
-    text: '#ECEFF4',
+    text: '#EEEEEE',
+    textMuted: '#D2D2D2',
   },
 }
 
