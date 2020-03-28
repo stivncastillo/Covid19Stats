@@ -81,7 +81,7 @@ const RootStackScreen = () => {
   React.useEffect(() => {
     setTimeout(() => {
       setIsLoading(!isLoading);
-    }, 2000);
+    }, 1000);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -109,8 +109,8 @@ const RootStackScreen = () => {
 export default () => {
   return (
     <NavigationContainer>
-        <AppStackScreen />
-      {/* <RootStackScreen /> */}
+        {/* <AppStackScreen /> */}
+      <RootStackScreen />
     </NavigationContainer>
   );
 };

@@ -1,11 +1,13 @@
 const dark = {
   theme: {
-    background: '#2E3440',
-    border: '#575c66',
-    backgroundAlt: '#575c66',
-    borderAlt: '#2E3440',
+    primary: '#3F4FC8',
+    background: '#1A1B25',
+    backgroundAlt: '#2A2B3A',
     text: '#EEEEEE',
     textMuted: '#D2D2D2',
+    textCardTitle: '#B3BCD0',
+    separator: '#2A2B3A',
+    white: '#FFFFFF',
   },
 }
 
