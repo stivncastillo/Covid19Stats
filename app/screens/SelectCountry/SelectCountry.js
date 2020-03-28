@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
-import { View, Text, FlatList } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react'
+import { View, Text, FlatList, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Container, TextInput, CountryItem, Button } from '../../components';
 import { withTheme } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Feather';
 import styled from 'styled-components/native';
 import styles from './styles';
+import CountryContext from '../../context/country/countryContext';
 
 import DATA from './data.json';
 
@@ -16,9 +17,21 @@ const ScreenContainer = styled(Container)`
 `
 
 const SelectCountry = (props) => {
-  const [countries, setCountries] = useState(DATA.filter(item => item.hasOwnProperty('iso3')));
+  const [countries, setCountries] = useState([]);
   const [textCountry, setTextCountry] = useState('');
   const [selected, setSelected] = useState({});
+  const countryContext = useContext(CountryContext);
+  const { countries: countriesList, getCountries, loading, error } = countryContext;
+  console.log("SelectCountry -> loading", loading)
+
+  useEffect(() => {
+    getCountries();
+  }, [])
+
+  useEffect(() => {
+    setCountries(countriesList)
+    console.log("SelectCountry -> countriesList", countriesList)
+  }, [countriesList])
 
   const onSelect = (country) => {
     if (country.iso3 === selected.iso3) {
@@ -41,7 +54,7 @@ const SelectCountry = (props) => {
   const onSearch = (text) => {
     setTextCountry(text);
 
-    const filterData = DATA.filter(item => {
+    const filterData = countries.filter(item => {
       return item.name.includes(text) && item.hasOwnProperty('iso3');
     });
 
@@ -56,8 +69,11 @@ const SelectCountry = (props) => {
           onChangeText={(text) => onSearch(text)}
           placeholder="Search Country" />
       </View>
-
-      <FlatList
+      {
+        loading ?
+          <ActivityIndicator size="large" color={props.theme.textCardTitle} />
+        :
+        <FlatList
         style={styles.list}
         data={countries}
         renderItem={({ item }) => (
@@ -76,6 +92,8 @@ const SelectCountry = (props) => {
         keyExtractor={item => item.iso3}
         extraData={selected}
       />
+      }
+
 
       <Button
         activeOpacity={0.7}

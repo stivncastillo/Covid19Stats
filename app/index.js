@@ -1,9 +1,14 @@
 import React from 'react';
 import Navigation from './config/navigation';
-import ThemeManager from './utils/ThemeContext'
+import ThemeManager from './utils/ThemeContext';
+
+import CountryState from './context/country/CountryState';
+
 
 export default () => (
   <ThemeManager>
-    <Navigation />
+    <CountryState>
+      <Navigation />
+    </CountryState>
   </ThemeManager>
 );

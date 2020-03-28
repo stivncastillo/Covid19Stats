@@ -81,7 +81,7 @@ const RootStackScreen = () => {
   React.useEffect(() => {
     setTimeout(() => {
       setIsLoading(!isLoading);
-    }, 1000);
+    }, 500);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -91,6 +91,7 @@ const RootStackScreen = () => {
       screenOptions={{ animationEnabled: false }}
       mode="modal"
     >
+
       {isLoading ? (
         <RootStack.Screen name="AppStackScreen" component={AppStackScreen} />
       ) :
