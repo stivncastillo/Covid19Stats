@@ -5,6 +5,7 @@ import CountryReducer from './countryReducer';
 
 import {
   SET_LOADING,
+  REMOVE_LOADING,
   GET_COUNTRIES_SUCCESS,
   GET_COUNTRIES_ERROR,
 } from '../types';
@@ -46,6 +47,7 @@ const CountryState = props => {
   }
 
   const setLoading = () => dispatch({ type: SET_LOADING });
+  const removeLoading = () => dispatch({ type: REMOVE_LOADING });
 
   return <CountryContext.Provider
     value={{
@@ -54,8 +56,9 @@ const CountryState = props => {
       loading: state.loading,
       error: state.error,
       setLoading,
+      removeLoading,
       getCountries,
-     }}
+    }}
   >
     {props.children}
   </CountryContext.Provider>;

@@ -8,29 +8,29 @@ import styled from 'styled-components/native';
 import styles from './styles';
 import CountryContext from '../../context/country/countryContext';
 
-import DATA from './data.json';
-
 // Override
 const ScreenContainer = styled(Container)`
   padding-top: 32px;
   padding-bottom: 16px;
-`
+`;
 
 const SelectCountry = (props) => {
   const [countries, setCountries] = useState([]);
   const [textCountry, setTextCountry] = useState('');
   const [selected, setSelected] = useState({});
   const countryContext = useContext(CountryContext);
-  const { countries: countriesList, getCountries, loading, error } = countryContext;
-  console.log("SelectCountry -> loading", loading)
+  const { countries: countriesList, getCountries, loading, removeLoading } = countryContext;
 
   useEffect(() => {
     getCountries();
+    console.log('SelectCountry -> loading', loading)
   }, [])
 
   useEffect(() => {
-    setCountries(countriesList)
-    console.log("SelectCountry -> countriesList", countriesList)
+    setCountries(countriesList);
+    if (countriesList.length > 0) {
+      removeLoading();
+    }
   }, [countriesList])
 
   const onSelect = (country) => {
@@ -61,6 +61,20 @@ const SelectCountry = (props) => {
     setCountries(filterData);
   }
 
+  const getItem = ({ item }) => (
+    <CountryItem
+      onPress={() => onSelect(item)}
+      activeOpacity={0.5}
+      style={styles.item}
+      >
+      <Text style={{ color: props.theme.text }}>{item.name}</Text>
+      {
+        selected.iso3 === item.iso3 &&
+        <Icon name="check" size={16} color={props.theme.text} />
+      }
+    </CountryItem>
+  )
+
   return (
     <ScreenContainer>
       <View style={styles.searchContainer}>
@@ -74,24 +88,13 @@ const SelectCountry = (props) => {
           <ActivityIndicator size="large" color={props.theme.textCardTitle} />
         :
         <FlatList
-        style={styles.list}
-        data={countries}
-        renderItem={({ item }) => (
-          <CountryItem
-            onPress={() => onSelect(item)}
-            activeOpacity={0.5}
-            style={styles.item}
-            >
-            <Text style={{ color: props.theme.text }}>{item.name}</Text>
-            {
-              selected.iso3 === item.iso3 &&
-              <Icon name="check" size={16} color={props.theme.text} />
-            }
-          </CountryItem>
-        )}
-        keyExtractor={item => item.iso3}
-        extraData={selected}
-      />
+          style={styles.list}
+          data={countries}
+          renderItem={getItem}
+          keyExtractor={item => item.iso3}
+          extraData={selected}
+          initialNumToRender={200}
+        />
       }
 
 
