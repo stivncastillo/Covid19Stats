@@ -8,6 +8,7 @@ import ScreenSubtitle from './Text/ScreenSubtitle';
 import TextCardTitle from './Text/TextCardTitle';
 import CardContainer from './Card/CardContainer';
 import Card from './Card/Card';
+import Indicator from './Indicator';
 
 export {
   Container,
@@ -20,4 +21,5 @@ export {
   TextCardTitle,
   CardContainer,
   Card,
+  Indicator,
 }

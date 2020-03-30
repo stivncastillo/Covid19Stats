@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import CardContainer from './CardContainer';
 import TextCardTitle from '../Text/TextCardTitle';
 import Icon from 'react-native-vector-icons/Feather';
@@ -50,4 +50,5 @@ Card.defaultProps = {
   icon: null,
   iconOnPress: () => {},
 }
+
 export default Card
