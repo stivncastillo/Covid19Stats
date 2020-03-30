@@ -19,11 +19,10 @@ const SelectCountry = (props) => {
   const [textCountry, setTextCountry] = useState('');
   const [selected, setSelected] = useState({});
   const countryContext = useContext(CountryContext);
-  const { countries: countriesList, getCountries, loading, removeLoading } = countryContext;
+  const { countries: countriesList, getCountries, loading, removeLoading, selectCountry } = countryContext;
 
   useEffect(() => {
     getCountries();
-    console.log('SelectCountry -> loading', loading)
   }, [])
 
   useEffect(() => {
@@ -43,8 +42,11 @@ const SelectCountry = (props) => {
 
   const onSave = async () => {
     try {
-      await AsyncStorage.removeItem('@country')
-      await AsyncStorage.setItem('@country', JSON.stringify(selected))
+      await AsyncStorage.removeItem('@country');
+      await AsyncStorage.setItem('@country', JSON.stringify(selected));
+
+      selectCountry(selected);
+
       props.navigation.pop();
     } catch (e) {
       console.log('storeCounry -> e', e)
@@ -93,10 +95,11 @@ const SelectCountry = (props) => {
           renderItem={getItem}
           keyExtractor={item => item.iso3}
           extraData={selected}
-          initialNumToRender={200}
+          initialNumToRender={10}
+          removeClippedSubviews={true}
+          maxToRenderPerBatch={5}
         />
       }
-
 
       <Button
         activeOpacity={0.7}

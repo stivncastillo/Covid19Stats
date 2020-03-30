@@ -82,7 +82,6 @@ const RootStackScreen = () => {
     setTimeout(() => {
       setIsLoading(!isLoading);
     }, 500);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

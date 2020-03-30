@@ -4,6 +4,7 @@ import {
   GET_COUNTRIES_ERROR,
   SET_LOADING,
   REMOVE_LOADING,
+  SELECT_COUNTRY,
 } from '../types';
 
 export default (state, action) => {
@@ -19,6 +20,11 @@ export default (state, action) => {
       return {
         ...state,
         countries: action.payload.countries.filter(item => item.hasOwnProperty('iso3')),
+      };
+    case SELECT_COUNTRY:
+      return {
+        ...state,
+        selectedCountry: action.selectedCountry,
       };
     case SET_LOADING:
       return {

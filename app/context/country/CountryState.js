@@ -8,6 +8,7 @@ import {
   REMOVE_LOADING,
   GET_COUNTRIES_SUCCESS,
   GET_COUNTRIES_ERROR,
+  SELECT_COUNTRY,
 } from '../types';
 
 const CountryState = props => {
@@ -46,6 +47,13 @@ const CountryState = props => {
     }
   }
 
+  const selectCountry = (selectedCountry) => {
+    dispatch({
+      type: SELECT_COUNTRY,
+      selectedCountry,
+    });
+  }
+
   const setLoading = () => dispatch({ type: SET_LOADING });
   const removeLoading = () => dispatch({ type: REMOVE_LOADING });
 
@@ -58,6 +66,7 @@ const CountryState = props => {
       setLoading,
       removeLoading,
       getCountries,
+      selectCountry,
     }}
   >
     {props.children}

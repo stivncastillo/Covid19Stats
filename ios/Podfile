@@ -41,6 +41,10 @@ target 'Covid19Stats' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
+  pod 'react-native-appearance', :path => '../node_modules/react-native-appearance'
+
   target 'Covid19StatsTests' do
     inherit! :search_paths
     # Pods for testing
