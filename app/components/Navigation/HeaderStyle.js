@@ -6,7 +6,7 @@ const HeaderStyle = (theme) => ({
     backgroundColor: theme.background,
     shadowColor: 'transparent',
     elevation: 0,
-    height: 100,
+    height: 80,
   },
   headerTintColor: theme.text,
   headerTitleStyle: {
@@ -14,7 +14,7 @@ const HeaderStyle = (theme) => ({
   },
   headerRight: () => (
     <Image
-      style={{ height: 40, width: 40}}
+      style={{ height: 30, width: 30}}
       resizeMode="contain"
       source={require('../../../assets/Logo.png')}
     />

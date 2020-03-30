@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
-import { Text, Switch } from 'react-native'
-import styled from 'styled-components/native'
-import { useTheme } from '../../utils/ThemeContext'
+import { Text } from 'react-native'
+// import { useTheme } from '../../utils/ThemeContext'
 import CountryContext from '../../context/country/countryContext';
-import { Container } from '../../components';
+import { ScrollContainer, ScreenSubtitle, Card } from '../../components';
 
 const Home = ({ navigation }) => {
-  const theme = useTheme();
+  // const theme = useTheme();
   const countryContext = useContext(CountryContext);
   const { selectedCountry } = countryContext;
 
@@ -15,9 +14,29 @@ const Home = ({ navigation }) => {
   // }
 
   return (
-    <Container>
-      <Text style={{color: 'white'}}>{JSON.stringify(selectedCountry)}</Text>
-    </Container>
+    <ScrollContainer>
+      <ScreenSubtitle>March 25 2020</ScreenSubtitle>
+
+      <Card title="Colombian News" icon="settings" iconOnPress={() => alert('puto!')}>
+        <Text style={{color: 'white'}}>{JSON.stringify(selectedCountry)}</Text>
+      </Card>
+
+      <Card title="Colombian News" icon="settings">
+        <Text style={{color: 'white'}}>{JSON.stringify(selectedCountry)}</Text>
+      </Card>
+
+      <Card title="Colombian News" icon="settings">
+        <Text style={{color: 'white'}}>{JSON.stringify(selectedCountry)}</Text>
+      </Card>
+
+      <Card title="Colombian News" icon="settings">
+        <Text style={{color: 'white'}}>{JSON.stringify(selectedCountry)}</Text>
+      </Card>
+
+      <Card title="Colombian News" icon="settings">
+        <Text style={{color: 'white'}}>{JSON.stringify(selectedCountry)}</Text>
+      </Card>
+    </ScrollContainer>
   )
 }
 

@@ -1,12 +1,10 @@
 import React from 'react'
 import styled from 'styled-components/native';
 
-const Container = styled.View`
+const ScrollContainer = styled.ScrollView`
   flex: 1;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 0 16px;
-  padding-top: 16px;
+  padding: 16px;
   background: ${props => props.theme.background};
 `
-export default Container;
+export default ScrollContainer;
