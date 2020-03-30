@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext }  from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { ThemeContext } from 'styled-components';
+import HeaderStyle from '../components/Navigation/HeaderStyle.js'
 
 import Icon from 'react-native-vector-icons/Feather';
 
+// Screens
 import Splash from '../screens/Splash/Splash';
 import Home from '../screens/Home/Home';
 import Settings from '../screens/Settings/Settings';
@@ -13,26 +16,43 @@ import SelectCountry from '../screens/SelectCountry/SelectCountry';
 import About from '../screens/About/About';
 
 const HomeStack = createStackNavigator();
-const HomeStackScreen = () => (
-  <HomeStack.Navigator>
-    <HomeStack.Screen name="Home" component={Home} />
-  </HomeStack.Navigator>
-);
+const HomeStackScreen = () => {
+  const theme = useContext(ThemeContext);
+
+  return (
+    <HomeStack.Navigator
+      screenOptions={HeaderStyle(theme)}>
+        <HomeStack.Screen name="Home" component={Home} options={{
+          title: 'Covid-19',
+        }} />
+    </HomeStack.Navigator>
+  )
+};
 
 const SettingsStack = createStackNavigator();
-const SettingsStackScreen = () => (
-  <SettingsStack.Navigator>
-    <SettingsStack.Screen name="Settings" component={Settings} />
-    <SettingsStack.Screen name="About" component={About} />
-  </SettingsStack.Navigator>
-);
+const SettingsStackScreen = () => {
+  const theme = useContext(ThemeContext);
+
+  return (
+    <SettingsStack.Navigator
+      screenOptions={HeaderStyle(theme)}>
+        <SettingsStack.Screen name="Settings" component={Settings} />
+        <SettingsStack.Screen name="About" component={About} />
+    </SettingsStack.Navigator>
+  )
+};
 
 const NewsStack = createStackNavigator();
-const NewsStackScreen = () => (
-  <NewsStack.Navigator>
-    <NewsStack.Screen name="News" component={News} />
-  </NewsStack.Navigator>
-);
+const NewsStackScreen = () => {
+  const theme = useContext(ThemeContext);
+
+  return (
+    <NewsStack.Navigator
+      screenOptions={HeaderStyle(theme)}>
+        <NewsStack.Screen name="News" component={News} />
+    </NewsStack.Navigator>
+  )
+};
 
 const AppTabs = createBottomTabNavigator();
 const AppTabsScreen = () => (
@@ -91,6 +111,7 @@ const RootStackScreen = () => {
       mode="modal"
     >
 
+      {/* <RootStack.Screen name="AppTabsScreen" component={AppTabsScreen} /> */}
       {isLoading ? (
         <RootStack.Screen name="AppStackScreen" component={AppStackScreen} />
       ) :
