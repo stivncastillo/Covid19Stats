@@ -111,12 +111,12 @@ const RootStackScreen = () => {
       mode="modal"
     >
 
-      <RootStack.Screen name="AppTabsScreen" component={AppTabsScreen} />
-      {/* {isLoading ? (
+      {/* <RootStack.Screen name="AppTabsScreen" component={AppTabsScreen} /> */}
+      {isLoading ? (
         <RootStack.Screen name="AppStackScreen" component={AppStackScreen} />
       ) :
         <RootStack.Screen name="AppTabsScreen" component={AppTabsScreen} />
-      } */}
+      }
 
       <RootStack.Screen
         name="SelectCountry"
