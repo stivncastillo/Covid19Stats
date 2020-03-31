@@ -7,6 +7,7 @@ const numeral = require('numeral');
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
+    flex: 1,
   },
 });
 

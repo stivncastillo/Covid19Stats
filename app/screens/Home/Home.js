@@ -1,58 +1,90 @@
-import React, { useContext, useEffect } from 'react'
-import { Text, View } from 'react-native'
-// import { useTheme } from '../../utils/ThemeContext'
+import React, { useContext, useEffect, useState } from 'react'
+import { Text, ActivityIndicator, RefreshControl } from 'react-native'
 import CountryContext from '../../context/country/countryContext';
 import StatsContext from '../../context/stats/statsContext';
 import { ScrollContainer, ScreenSubtitle, Card, Indicator } from '../../components';
+import { withTheme } from 'styled-components/native';
 
 import styled from 'styled-components/native';
 const IndicatorContainer = styled.View`
   flex-direction: row;
-  justify-content: space-between;
-`
+  flex: 1;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+`;
 
-const Home = ({ navigation }) => {
-  // const theme = useTheme();
+const Home = ({ navigation, theme }) => {
+  const [refreshing, setRefreshing] = useState(false);
   const countryContext = useContext(CountryContext);
   const statsContext = useContext(StatsContext);
   const { selectedCountry } = countryContext;
-  const { globalStats, getGlobalStats } = statsContext;
-  console.log("Home -> globalStats", globalStats)
+  const { globalStats, getGlobalStats, getCountryStats, countryStats } = statsContext;
 
   useEffect(() => {
-    getGlobalStats()
-  }, [])
+    loadData();
+  }, []);
 
-  // if (selectedCountry === null) {
-  //   navigation.navigate('SelectCountry');
-  // }
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    loadData();
+
+    new Promise(resolve => {
+      setTimeout(resolve, 1000);
+    }).then(() => setRefreshing(false));
+  }, [refreshing]);
+
+  const loadData = () => {
+    getGlobalStats();
+
+    if (selectedCountry !== null) {
+      getCountryStats(selectedCountry.name);
+    }
+  }
+
+  if (selectedCountry === null) {
+    navigation.navigate('SelectCountry');
+  }
 
   return (
-    <ScrollContainer>
+    <ScrollContainer
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
       <ScreenSubtitle>March 25 2020</ScreenSubtitle>
 
-      {
-        globalStats !== null &&
-        <Card title="Global Situation">
-          <IndicatorContainer>
-            <Indicator name="Confirmed" number={globalStats.cases} />
-            <Indicator name="Recovered" number={globalStats.recovered} />
-            <Indicator name="Deaths" number={globalStats.deaths} />
-          </IndicatorContainer>
-        </Card>
-      }
-
-
-      <Card title="Colombian Putos" icon="settings">
-        <IndicatorContainer>
-          <Indicator name="Confirmed" number={466836} />
-          <Indicator name="Recovered" number={113225} />
-          <Indicator name="Deaths" number={21105} />
-        </IndicatorContainer>
+      <Card title="Global Situation">
+        {
+          globalStats !== null ?
+              <IndicatorContainer>
+                <Indicator name="Confirmed" number={globalStats.cases} />
+                <Indicator name="Recovered" number={globalStats.recovered} />
+                <Indicator name="Deaths" number={globalStats.deaths} />
+              </IndicatorContainer>
+          :
+            <ActivityIndicator size="large" color={theme.textCardTitle} />
+        }
       </Card>
 
-      <Card title="Colombian News" icon="settings">
-        <Text style={{color: 'white'}}>{JSON.stringify(selectedCountry)}</Text>
+      <Card title={`${selectedCountry.name} Situation`} icon="settings">
+        {
+          countryStats !== null ?
+            <>
+              <IndicatorContainer>
+                <Indicator name="Confirmed" number={countryStats.cases} />
+                <Indicator name="Recovered" number={countryStats.recovered} />
+              </IndicatorContainer>
+              <IndicatorContainer>
+                <Indicator name="Today Cases" number={countryStats.todayCases} />
+                <Indicator name="Deaths" number={countryStats.deaths} />
+              </IndicatorContainer>
+            </>
+          :
+            <ActivityIndicator size="large" color={theme.textCardTitle} />
+        }
+      </Card>
+
+      <Card title={`${selectedCountry.name} Stats`} icon="settings">
+        <ActivityIndicator size="large" color={theme.textCardTitle} />
       </Card>
 
       <Card title="Colombian News" icon="settings">
@@ -66,4 +98,4 @@ const Home = ({ navigation }) => {
   )
 }
 
-export default Home
+export default withTheme(Home);

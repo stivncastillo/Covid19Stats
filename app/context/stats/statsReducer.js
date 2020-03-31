@@ -2,6 +2,8 @@ import {
   GET_GLOBAL_STATS,
   GET_GLOBAL_STATS_SUCCESS,
   GET_GLOBAL_STATS_ERROR,
+  GET_COUNTRY_STATS_SUCCESS,
+  GET_COUNTRY_STATS_ERROR,
   SET_LOADING,
   REMOVE_LOADING,
 } from '../types';
@@ -19,6 +21,17 @@ export default (state, action) => {
       return {
         ...state,
         globalStats: action.payload,
+      };
+    case GET_COUNTRY_STATS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: true,
+      };
+    case GET_COUNTRY_STATS_SUCCESS:
+      return {
+        ...state,
+        countryStats: action.payload,
       };
     case SET_LOADING:
       return {
