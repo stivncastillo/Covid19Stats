@@ -30,7 +30,10 @@ const Home = ({ navigation, theme }) => {
 
     new Promise(resolve => {
       setTimeout(resolve, 1000);
-    }).then(() => setRefreshing(false));
+    }).then(() => {
+      console.log('sisas')
+      setRefreshing(false)
+    });
   }, [refreshing]);
 
   const loadData = () => {
@@ -81,18 +84,6 @@ const Home = ({ navigation, theme }) => {
           :
             <ActivityIndicator size="large" color={theme.textCardTitle} />
         }
-      </Card>
-
-      <Card title={`${selectedCountry.name} Stats`} icon="settings">
-        <ActivityIndicator size="large" color={theme.textCardTitle} />
-      </Card>
-
-      <Card title="Colombian News" icon="settings">
-        <Text style={{color: 'white'}}>{JSON.stringify(selectedCountry)}</Text>
-      </Card>
-
-      <Card title="Colombian News" icon="settings">
-        <Text style={{color: 'white'}}>{JSON.stringify(selectedCountry)}</Text>
       </Card>
     </ScrollContainer>
   )

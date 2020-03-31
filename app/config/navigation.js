@@ -3,7 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ThemeContext } from 'styled-components';
-import HeaderStyle from '../components/Navigation/HeaderStyle.js'
+import HeaderStyle from '../components/Navigation/HeaderStyle';
+import TabBar from '../components/Navigation/TabBar';
 
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -55,31 +56,50 @@ const NewsStackScreen = () => {
 };
 
 const AppTabs = createBottomTabNavigator();
-const AppTabsScreen = () => (
-  <AppTabs.Navigator
-    tabBarOptions={{
-      showLabel: false,
-    }}>
-    <AppTabs.Screen name="Home" component={HomeStackScreen}
-      options={{
-        tabBarIcon: props => (
-          <Icon name="grid" size={props.size} color={props.color} />
-        ),
-      }} />
-    <AppTabs.Screen name="News" component={NewsStackScreen}
-      options={{
-        tabBarIcon: props => (
-          <Icon name="globe" size={props.size} color={props.color} />
-        ),
-      }}/>
-    <AppTabs.Screen name="Settings" component={SettingsStackScreen}
-      options={{
-        tabBarIcon: props => (
-          <Icon name="settings" size={props.size} color={props.color} />
-        ),
-      }}/>
-  </AppTabs.Navigator>
-);
+const AppTabsScreen = () => {
+  const theme = useContext(ThemeContext);
+
+  return (
+    <AppTabs.Navigator
+      tabBar={props => <TabBar {...props} />}
+      tabBarOptions={{
+        showLabel: false,
+        activeTintColor: theme.primary,
+        inactiveTintColor: theme.tintInactiveTabBar,
+        style: {
+          backgroundColor: theme.backgroundTabBar,
+          position: 'absolute',
+          left: 0,
+          bottom: 0,
+          right: 0,
+          borderTopWidth: 0,
+          borderTopRightRadius: 10,
+          borderTopLeftRadius: 10,
+          height: 60,
+          elevation: 0,
+        },
+      }}>
+      <AppTabs.Screen name="Home" component={HomeStackScreen}
+        options={{
+          tabBarIcon: props => (
+            <Icon name="grid" size={20} color={props.color} />
+          ),
+        }} />
+      <AppTabs.Screen name="News" component={NewsStackScreen}
+        options={{
+          tabBarIcon: props => (
+            <Icon name="globe" size={20} color={props.color} />
+          ),
+        }}/>
+      <AppTabs.Screen name="Settings" component={SettingsStackScreen}
+        options={{
+          tabBarIcon: props => (
+            <Icon name="settings" size={20} color={props.color} />
+          ),
+        }}/>
+    </AppTabs.Navigator>
+  )
+};
 
 const AppStack = createStackNavigator();
 const AppStackScreen = () => (
