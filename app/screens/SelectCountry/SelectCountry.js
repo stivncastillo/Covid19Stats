@@ -40,10 +40,8 @@ const SelectCountry = (props) => {
     useCallback(() => {
       const onBackPress = () => {
         if (selectedCountry === null) {
-          console.log('no hay pais');
           return true;
         } else {
-          console.log('si hay pais');
           return false;
         }
       };

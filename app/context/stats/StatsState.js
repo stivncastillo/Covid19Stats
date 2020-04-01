@@ -4,10 +4,10 @@ import StatsContext from './statsContext';
 import StatsReducer from './statsReducer';
 
 import {
-  SET_LOADING,
-  REMOVE_LOADING,
+  GET_GLOBAL_STATS,
   GET_GLOBAL_STATS_SUCCESS,
   GET_GLOBAL_STATS_ERROR,
+  GET_COUNTRY_STATS,
   GET_COUNTRY_STATS_SUCCESS,
   GET_COUNTRY_STATS_ERROR,
 } from '../types';
@@ -15,8 +15,9 @@ import {
 const StatsState = props => {
   const initialState = {
     globalStats: {},
+    loadingGlobalStats: false,
     countryStats: {},
-    loading: false,
+    loadingCountryStats: false,
     error: false,
   }
 
@@ -31,7 +32,7 @@ const StatsState = props => {
     };
 
     try {
-      setLoading();
+      dispatch({ type: GET_GLOBAL_STATS });
 
       const res = await axios.get('https://corona.lmao.ninja/all', config);
 
@@ -57,10 +58,9 @@ const StatsState = props => {
     };
 
     try {
-      setLoading();
+      dispatch({ type: GET_COUNTRY_STATS });
 
       const res = await axios.get(`https://corona.lmao.ninja/countries/${country}`, config);
-      console.log('getCountryStats -> res', res)
 
       dispatch({
         type: GET_COUNTRY_STATS_SUCCESS,
@@ -75,17 +75,13 @@ const StatsState = props => {
     }
   }
 
-  const setLoading = () => dispatch({ type: SET_LOADING });
-  const removeLoading = () => dispatch({ type: REMOVE_LOADING });
-
   return <StatsContext.Provider
     value={{
       globalStats: state.globalStats,
+      loadingGlobalStats: state.loadingGlobalStats,
       countryStats: state.countryStats,
-      loading: state.loading,
+      loadingCountryStats: state.loadingCountryStats,
       error: state.error,
-      setLoading,
-      removeLoading,
       getGlobalStats,
       getCountryStats,
     }}

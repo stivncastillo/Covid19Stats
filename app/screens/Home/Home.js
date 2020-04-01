@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ActivityIndicator, RefreshControl } from 'react-native'
+import { ActivityIndicator, RefreshControl, Text } from 'react-native'
 import { withTheme } from 'styled-components/native';
 import styled from 'styled-components/native';
 import CountryContext from '../../context/country/countryContext';
@@ -19,7 +19,14 @@ const Home = ({ navigation, theme }) => {
   const countryContext = useContext(CountryContext);
   const statsContext = useContext(StatsContext);
   const { selectedCountry } = countryContext;
-  const { globalStats, getGlobalStats, getCountryStats, countryStats } = statsContext;
+  const {
+    globalStats,
+    getGlobalStats,
+    getCountryStats,
+    countryStats,
+    loadingGlobalStats,
+    loadingCountryStats,
+  } = statsContext;
 
   useEffect(() => {
     loadData();
@@ -32,7 +39,6 @@ const Home = ({ navigation, theme }) => {
     new Promise(resolve => {
       setTimeout(resolve, 1000);
     }).then(() => {
-      console.log('sisas')
       setRefreshing(false)
     });
   }, [refreshing]);
@@ -58,34 +64,40 @@ const Home = ({ navigation, theme }) => {
 
       <Card title="Global Situation">
         {
-          globalStats !== null ?
-              <IndicatorContainer>
-                <Indicator name="Confirmed" number={globalStats.cases} />
-                <Indicator name="Recovered" number={globalStats.recovered} />
-                <Indicator name="Deaths" number={globalStats.deaths} />
-              </IndicatorContainer>
-          :
-            <ActivityIndicator size="large" color={theme.textCardTitle} />
+          loadingGlobalStats ?
+            <ActivityIndicator size="small" color={theme.textCardTitle} />
+            :
+              globalStats !== null ?
+                <IndicatorContainer>
+                  <Indicator name="Confirmed" number={globalStats.cases} />
+                  <Indicator name="Recovered" number={globalStats.recovered} />
+                  <Indicator name="Deaths" number={globalStats.deaths} />
+                </IndicatorContainer>
+            :
+              <Text style={{ colot: theme.text }}>Sorry, no data to show.</Text>
         }
       </Card>
 
       {
         selectedCountry !== null &&
-          <Card title={`${selectedCountry.name} Situation`} icon="settings">
+          <Card title={selectedCountry !== null ? `${selectedCountry.name} Situation` : 'No Country Selected'} icon="edit" iconOnPress={() => navigation.navigate('SelectCountry')}>
             {
-              countryStats !== null ?
-                <>
-                  <IndicatorContainer>
-                    <Indicator name="Confirmed" number={countryStats.cases} />
-                    <Indicator name="Recovered" number={countryStats.recovered} />
-                  </IndicatorContainer>
-                  <IndicatorContainer>
-                    <Indicator name="Today Cases" number={countryStats.todayCases} />
-                    <Indicator name="Deaths" number={countryStats.deaths} />
-                  </IndicatorContainer>
-                </>
+              loadingCountryStats ?
+                <ActivityIndicator size="small" color={theme.textCardTitle} />
               :
-                <ActivityIndicator size="large" color={theme.textCardTitle} />
+                countryStats !== null ?
+                  <>
+                    <IndicatorContainer>
+                      <Indicator name="Confirmed" number={countryStats.cases} />
+                      <Indicator name="Recovered" number={countryStats.recovered} />
+                    </IndicatorContainer>
+                    <IndicatorContainer>
+                      <Indicator name="Today Cases" number={countryStats.todayCases} />
+                      <Indicator name="Deaths" number={countryStats.deaths} />
+                    </IndicatorContainer>
+                  </>
+                :
+                  <Text style={{ colot: theme.text }}>Sorry, no data to show.</Text>
             }
           </Card>
       }

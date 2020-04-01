@@ -2,47 +2,49 @@ import {
   GET_GLOBAL_STATS,
   GET_GLOBAL_STATS_SUCCESS,
   GET_GLOBAL_STATS_ERROR,
+  GET_COUNTRY_STATS,
   GET_COUNTRY_STATS_SUCCESS,
   GET_COUNTRY_STATS_ERROR,
-  SET_LOADING,
-  REMOVE_LOADING,
 } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
+    // Global
     case GET_GLOBAL_STATS:
-    case GET_GLOBAL_STATS_ERROR:
       return {
         ...state,
-        loading: false,
-        error: true,
+        loadingGlobalStats: true,
       };
     case GET_GLOBAL_STATS_SUCCESS:
       return {
         ...state,
         globalStats: action.payload,
+        loadingGlobalStats: false,
       };
-    case GET_COUNTRY_STATS_ERROR:
+    case GET_GLOBAL_STATS_ERROR:
       return {
         ...state,
-        loading: false,
+        loadingGlobalStats: false,
         error: true,
+      };
+    // Country
+    case GET_COUNTRY_STATS:
+      return {
+        ...state,
+        loadingCountryStats: true,
       };
     case GET_COUNTRY_STATS_SUCCESS:
       return {
         ...state,
         countryStats: action.payload,
+        loadingCountryStats: false,
       };
-    case SET_LOADING:
+    case GET_COUNTRY_STATS_ERROR:
       return {
         ...state,
-        loading: true,
-      }
-    case REMOVE_LOADING:
-      return {
-        ...state,
-        loading: false,
-      }
+        loadingCountryStats: false,
+        error: true,
+      };
     default:
       return state;
   }
