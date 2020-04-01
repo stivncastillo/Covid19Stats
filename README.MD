@@ -1,0 +1,3 @@
+# CovidStats
+
+## Create .env

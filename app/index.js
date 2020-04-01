@@ -4,13 +4,16 @@ import ThemeManager from './utils/ThemeContext';
 
 import CountryState from './context/country/CountryState';
 import StatsState from './context/stats/StatsState';
+import NewsState from './context/news/NewsState';
 
 
 export default () => (
   <ThemeManager>
     <CountryState>
       <StatsState>
-        <Navigation />
+        <NewsState>
+          <Navigation />
+        </NewsState>
       </StatsState>
     </CountryState>
   </ThemeManager>

@@ -6,6 +6,8 @@ import CountryItem from './CountryItem';
 import Button from './Button';
 import ScreenSubtitle from './Text/ScreenSubtitle';
 import TextCardTitle from './Text/TextCardTitle';
+import TextArticleTitle from './Text/TextArticleTitle';
+import TextArticleAuthor from './Text/TextArticleAuthor';
 import CardContainer from './Card/CardContainer';
 import Card from './Card/Card';
 import Indicator from './Indicator';
@@ -24,4 +26,6 @@ export {
   Card,
   Indicator,
   SettingsItem,
+  TextArticleTitle,
+  TextArticleAuthor,
 }

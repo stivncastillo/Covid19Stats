@@ -1,9 +1,10 @@
-import React from 'react'
-import { View, Text, Switch, TouchableOpacity } from 'react-native'
+import React, { useContext } from 'react';
+import { Text, Switch, TouchableOpacity } from 'react-native';
 import { ScrollContainer, ScreenSubtitle, CardContainer, SettingsItem } from '../../components';
 import styled from 'styled-components/native';
-import { useTheme } from '../../utils/ThemeContext'
+import { useTheme } from '../../utils/ThemeContext';
 import { withTheme } from 'styled-components/native';
+import CountryContext from '../../context/country/countryContext';
 
 const ScreenCardContainer = styled(CardContainer)`
   padding: 0px;
@@ -21,6 +22,8 @@ const TextLink = styled.Text`
 
 const Settings = ({ theme, navigation }) => {
   const themeContext = useTheme();
+  const countryContext = useContext(CountryContext);
+  const { selectedCountry } = countryContext;
 
   return (
     <ScrollContainer>
@@ -28,7 +31,7 @@ const Settings = ({ theme, navigation }) => {
 
       <ScreenCardContainer>
         <SettingsItem>
-          <Text style={{ color: theme.text }}>Colombia</Text>
+          <Text style={{ color: theme.text }}>{selectedCountry.name}</Text>
           <TouchableOpacity
             activeOpacity={0.8}
             style={{ height: 60, alignItems: 'center', justifyContent: 'center'}}
