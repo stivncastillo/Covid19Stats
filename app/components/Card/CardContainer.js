@@ -5,5 +5,6 @@ const CardContainer = styled.View`
   padding: 16px 16px 0px 16px;
   border-radius: 10px;
   margin-bottom: 16px;
+  flex: 1;
 `
 export default CardContainer;

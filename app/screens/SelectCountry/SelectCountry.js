@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { View, Text, FlatList, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect, useContext, useCallback } from 'react'
+import { View, Text, FlatList, ActivityIndicator, BackHandler } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Container, TextInput, CountryItem, Button } from '../../components';
 import { withTheme } from 'styled-components/native';
@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/Feather';
 import styled from 'styled-components/native';
 import styles from './styles';
 import CountryContext from '../../context/country/countryContext';
+import StatsContext from '../../context/stats/statsContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 // Override
 const ScreenContainer = styled(Container)`
@@ -19,7 +21,9 @@ const SelectCountry = (props) => {
   const [textCountry, setTextCountry] = useState('');
   const [selected, setSelected] = useState({});
   const countryContext = useContext(CountryContext);
-  const { countries: countriesList, getCountries, loading, removeLoading, selectCountry } = countryContext;
+  const { countries: countriesList, getCountries, loading, removeLoading, selectCountry, selectedCountry } = countryContext;
+  const statsContext = useContext(StatsContext);
+  const { getCountryStats } = statsContext;
 
   useEffect(() => {
     getCountries();
@@ -30,7 +34,26 @@ const SelectCountry = (props) => {
     if (countriesList.length > 0) {
       removeLoading();
     }
-  }, [countriesList])
+  }, [countriesList]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        if (selectedCountry === null) {
+          console.log('no hay pais');
+          return true;
+        } else {
+          console.log('si hay pais');
+          return false;
+        }
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [selectedCountry])
+  );
 
   const onSelect = (country) => {
     if (country.iso3 === selected.iso3) {
@@ -46,6 +69,7 @@ const SelectCountry = (props) => {
       await AsyncStorage.setItem('@country', JSON.stringify(selected));
 
       selectCountry(selected);
+      getCountryStats(selected.name);
 
       props.navigation.pop();
     } catch (e) {
@@ -56,7 +80,7 @@ const SelectCountry = (props) => {
   const onSearch = (text) => {
     setTextCountry(text);
 
-    const filterData = countries.filter(item => {
+    const filterData = countriesList.filter(item => {
       return item.name.includes(text) && item.hasOwnProperty('iso3');
     });
 

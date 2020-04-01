@@ -9,6 +9,7 @@ import TextCardTitle from './Text/TextCardTitle';
 import CardContainer from './Card/CardContainer';
 import Card from './Card/Card';
 import Indicator from './Indicator';
+import SettingsItem from './SettingsItem';
 
 export {
   Container,
@@ -22,4 +23,5 @@ export {
   CardContainer,
   Card,
   Indicator,
+  SettingsItem,
 }

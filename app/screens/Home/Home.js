@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Text, ActivityIndicator, RefreshControl } from 'react-native'
+import { ActivityIndicator, RefreshControl } from 'react-native'
+import { withTheme } from 'styled-components/native';
+import styled from 'styled-components/native';
 import CountryContext from '../../context/country/countryContext';
 import StatsContext from '../../context/stats/statsContext';
 import { ScrollContainer, ScreenSubtitle, Card, Indicator } from '../../components';
-import { withTheme } from 'styled-components/native';
 
-import styled from 'styled-components/native';
 const IndicatorContainer = styled.View`
   flex-direction: row;
   flex: 1;
@@ -14,6 +14,7 @@ const IndicatorContainer = styled.View`
 `;
 
 const Home = ({ navigation, theme }) => {
+  const today = new Date().toDateString();
   const [refreshing, setRefreshing] = useState(false);
   const countryContext = useContext(CountryContext);
   const statsContext = useContext(StatsContext);
@@ -53,7 +54,7 @@ const Home = ({ navigation, theme }) => {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
-      <ScreenSubtitle>March 25 2020</ScreenSubtitle>
+      <ScreenSubtitle>{today}</ScreenSubtitle>
 
       <Card title="Global Situation">
         {
@@ -68,23 +69,26 @@ const Home = ({ navigation, theme }) => {
         }
       </Card>
 
-      <Card title={`${selectedCountry.name} Situation`} icon="settings">
-        {
-          countryStats !== null ?
-            <>
-              <IndicatorContainer>
-                <Indicator name="Confirmed" number={countryStats.cases} />
-                <Indicator name="Recovered" number={countryStats.recovered} />
-              </IndicatorContainer>
-              <IndicatorContainer>
-                <Indicator name="Today Cases" number={countryStats.todayCases} />
-                <Indicator name="Deaths" number={countryStats.deaths} />
-              </IndicatorContainer>
-            </>
-          :
-            <ActivityIndicator size="large" color={theme.textCardTitle} />
-        }
-      </Card>
+      {
+        selectedCountry !== null &&
+          <Card title={`${selectedCountry.name} Situation`} icon="settings">
+            {
+              countryStats !== null ?
+                <>
+                  <IndicatorContainer>
+                    <Indicator name="Confirmed" number={countryStats.cases} />
+                    <Indicator name="Recovered" number={countryStats.recovered} />
+                  </IndicatorContainer>
+                  <IndicatorContainer>
+                    <Indicator name="Today Cases" number={countryStats.todayCases} />
+                    <Indicator name="Deaths" number={countryStats.deaths} />
+                  </IndicatorContainer>
+                </>
+              :
+                <ActivityIndicator size="large" color={theme.textCardTitle} />
+            }
+          </Card>
+      }
     </ScrollContainer>
   )
 }

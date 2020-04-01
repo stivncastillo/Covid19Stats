@@ -60,6 +60,7 @@ const StatsState = props => {
       setLoading();
 
       const res = await axios.get(`https://corona.lmao.ninja/countries/${country}`, config);
+      console.log('getCountryStats -> res', res)
 
       dispatch({
         type: GET_COUNTRY_STATS_SUCCESS,

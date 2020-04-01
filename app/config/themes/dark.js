@@ -7,7 +7,7 @@ const dark = {
     tintInactiveTabBar: '#44465B',
     tintActiveTabBar: '#B3BCD0',
     text: '#EEEEEE',
-    textMuted: '#D2D2D2',
+    textMuted: '#B1B1B1',
     textCardTitle: '#B3BCD0',//
     separator: '#2A2B3A',
     white: '#FFFFFF',
