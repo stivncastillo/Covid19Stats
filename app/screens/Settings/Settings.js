@@ -51,6 +51,19 @@ const Settings = ({ theme, navigation }) => {
             onValueChange={value => themeContext.setMode(value ? 'dark' : 'light')}
           />
         </SettingsItem>
+
+        <Separator />
+
+        <SettingsItem>
+          <Text style={{ color: theme.text }}>Covid19Stats App</Text>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{ height: 60, alignItems: 'center', justifyContent: 'center'}}
+            onPress={() => navigation.navigate('About')}>
+            <TextLink>Get Info</TextLink>
+          </TouchableOpacity>
+        </SettingsItem>
+
       </ScreenCardContainer>
     </ScrollContainer>
     )

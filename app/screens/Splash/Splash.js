@@ -31,13 +31,13 @@ const Splash = () => {
 
   return (
     <CenterContainer>
-        <Image
-          style={styles.image}
-          resizeMode="contain"
-          source={require('../../../assets/Logo.png')}
-        />
+      <Image
+        style={styles.image}
+        resizeMode="contain"
+        source={require('../../../assets/Logo.png')}
+      />
 
-        <TextAuthor> Develop by Stiven Castillo </TextAuthor>
+      <TextAuthor> Develop by Stiven Castillo </TextAuthor>
     </CenterContainer>
   )
 }

@@ -38,7 +38,6 @@ const SettingsStackScreen = () => {
     <SettingsStack.Navigator
       screenOptions={HeaderStyle(theme)}>
         <SettingsStack.Screen name="Settings" component={Settings} />
-        <SettingsStack.Screen name="About" component={About} />
     </SettingsStack.Navigator>
   )
 };
@@ -141,6 +140,13 @@ const RootStackScreen = () => {
       <RootStack.Screen
         name="SelectCountry"
         component={SelectCountry}
+        options={{ animationEnabled: true }}
+      />
+
+      <RootStack.Screen
+        name="About"
+        headerMode="none"
+        component={About}
         options={{ animationEnabled: true }}
       />
     </RootStack.Navigator>
