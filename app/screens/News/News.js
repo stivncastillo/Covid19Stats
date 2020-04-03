@@ -31,7 +31,7 @@ const News = ({ theme }) => {
     getHeadlines(selectedCountry.iso2);
     getNews()
   }, []);
-
+// 383704
   const getArticle = (item, index) => (
     <ScreenCardContainer key={`news${index}`}>
       <Image

@@ -79,18 +79,18 @@ const AppTabsScreen = () => {
           elevation: 0,
         },
       }}>
-      <AppTabs.Screen name="News" component={NewsStackScreen}
-        options={{
-          tabBarIcon: props => (
-            <Icon name="globe" size={20} color={props.color} />
-          ),
-        }}/>
       <AppTabs.Screen name="Home" component={HomeStackScreen}
         options={{
           tabBarIcon: props => (
             <Icon name="grid" size={20} color={props.color} />
           ),
         }} />
+      <AppTabs.Screen name="News" component={NewsStackScreen}
+        options={{
+          tabBarIcon: props => (
+            <Icon name="globe" size={20} color={props.color} />
+          ),
+        }}/>
       <AppTabs.Screen name="Settings" component={SettingsStackScreen}
         options={{
           tabBarIcon: props => (
