@@ -12,6 +12,7 @@ import CardContainer from './Card/CardContainer';
 import Card from './Card/Card';
 import Indicator from './Indicator';
 import SettingsItem from './SettingsItem';
+import NewsItem from './NewsItem';
 
 export {
   Container,
@@ -28,4 +29,5 @@ export {
   SettingsItem,
   TextArticleTitle,
   TextArticleAuthor,
+  NewsItem,
 }

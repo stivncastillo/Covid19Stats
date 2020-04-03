@@ -1,25 +1,15 @@
-import React, { useContext, useEffect } from 'react'
-import { Image, StyleSheet, ActivityIndicator } from 'react-native'
-import { ScrollContainer, ScreenSubtitle, CardContainer, TextArticleTitle, TextArticleAuthor } from '../../components';
+import React, { useContext, useEffect, useCallback } from 'react'
+import { StyleSheet, ActivityIndicator, Share, Alert, Linking } from 'react-native'
+import { ScrollContainer, ScreenSubtitle, TextArticleTitle, NewsItem } from '../../components';
 import { withTheme } from 'styled-components/native';
-import styled from 'styled-components/native';
 import NewsContext from '../../context/news/newsContext';
 import CountryContext from '../../context/country/countryContext';
 
 const styles = StyleSheet.create({
-  image: {
-      flex: 1,
-      alignSelf: 'stretch',
-      width: '100%',
-      height: 120,
-      marginBottom: 16,
+  container: {
+    paddingBottom: 80,
   },
 });
-
-const ScreenCardContainer = styled(CardContainer)`
-  padding-bottom: 16px;
-  flex:1;
-`
 
 const News = ({ theme }) => {
   const newsContext = useContext(NewsContext);
@@ -31,21 +21,30 @@ const News = ({ theme }) => {
     getHeadlines(selectedCountry.iso2);
     getNews()
   }, []);
-// 383704
-  const getArticle = (item, index) => (
-    <ScreenCardContainer key={`news${index}`}>
-      <Image
-        style={styles.image}
-        resizeMode="cover"
-        source={{uri: item.urlToImage}}
-      />
-      <TextArticleTitle>{item.title}</TextArticleTitle>
-      <TextArticleAuthor>{item.source.name}</TextArticleAuthor>
-    </ScreenCardContainer>
-  );
+
+  const onShare = async (item) => {
+    try {
+      await Share.share({ message: item.url });
+    } catch (error) {
+      Alert.alert( 'Error', error.message);
+    }
+  };
+
+  const onOpen = async (item) => {
+    const supported = await Linking.canOpenURL(item.url);
+
+    if (supported) {
+      await Linking.openURL(item.url);
+    } else {
+      Alert.alert(`Don't know how to open this URL: ${item.url}`);
+    }
+  };
+  // 383704
+  const getArticle = (item, index) => <NewsItem key={`news${index}`} item={item} onShare={() => onShare(item)} onOpen={() => onOpen(item)} />;
 
   return (
-    <ScrollContainer>
+    <ScrollContainer
+      contentContainerStyle={styles.container}>
       <ScreenSubtitle>{selectedCountry !== null ? `${selectedCountry.name}` : ''} TOP HEADLINES</ScreenSubtitle>
       {
         loadingNewsHeadline ?
