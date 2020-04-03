@@ -45,6 +45,8 @@ const Settings = ({ theme, navigation }) => {
         <SettingsItem>
           <Text style={{ color: theme.text }}>Dark Theme</Text>
           <Switch
+            trackColor={{ false: theme.textMuted, true: theme.textCardTitle }}
+            thumbColor={themeContext.mode === 'dark' ? theme.primary : theme.tintInactiveTabBar}
             value={themeContext.mode === 'dark'}
             onValueChange={value => themeContext.setMode(value ? 'dark' : 'light')}
           />
