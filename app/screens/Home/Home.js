@@ -5,7 +5,7 @@ import { LineChart } from 'react-native-chart-kit';
 import styled from 'styled-components/native';
 import CountryContext from '../../context/country/countryContext';
 import StatsContext from '../../context/stats/statsContext';
-import { ScrollContainer, ScreenSubtitle, Card, Indicator } from '../../components';
+import { ScrollContainer, ScreenSubtitle, Card, Indicator, Circle } from '../../components';
 
 const IndicatorContainer = styled.View`
   flex-direction: row;
@@ -13,6 +13,7 @@ const IndicatorContainer = styled.View`
   flex-wrap: wrap;
   margin-bottom: 0px;
 `;
+
 
 const Home = ({ navigation, theme }) => {
   const today = new Date().toDateString();
@@ -115,10 +116,21 @@ const Home = ({ navigation, theme }) => {
                 :
                 countryChartStats.labels.length > 0 && countryChartStats.datasets.length > 0 ?
                   <View>
+                    <View style={{ flexDirection: 'row'}}>
+                      <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 8}}>
+                        <Circle style={{ backgroundColor: 'rgba(200, 176, 63, 1)'}} />
+                        <Text style={{ color: theme.text }}>Cases</Text>
+                      </View>
+                      <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 8}}>
+                        <Circle style={{ backgroundColor: 'rgba(255, 86, 86, 1)'}} />
+                        <Text style={{ color: theme.text }}>Deaths</Text>
+                      </View>
+                      <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 8}}>
+                        <Circle style={{ backgroundColor: 'rgba(58, 208, 147, 1)'}} />
+                        <Text style={{ color: theme.text }}>Recovered</Text>
+                      </View>
+                    </View>
                     <LineChart
-                      // withDots={false}
-                      // withVerticalLabels={false}
-                      // withInnerLines={false}
                       verticalLabelRotation={45}
                       withOuterLines={false}
                       data={{
@@ -136,9 +148,6 @@ const Home = ({ navigation, theme }) => {
                         labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                         propsForDots: {
                           r: '4',
-                        },
-                        style: {
-                          // padding: 0,
                         },
                       }}
                       bezier

@@ -13,6 +13,7 @@ import Card from './Card/Card';
 import Indicator from './Indicator';
 import SettingsItem from './SettingsItem';
 import NewsItem from './NewsItem';
+import Circle from './Circle';
 
 export {
   Container,
@@ -30,4 +31,5 @@ export {
   TextArticleTitle,
   TextArticleAuthor,
   NewsItem,
+  Circle,
 }
