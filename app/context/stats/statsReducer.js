@@ -5,6 +5,9 @@ import {
   GET_COUNTRY_STATS,
   GET_COUNTRY_STATS_SUCCESS,
   GET_COUNTRY_STATS_ERROR,
+  GET_COUNTRY_CHART_STATS,
+  GET_COUNTRY_CHART_STATS_SUCCESS,
+  GET_COUNTRY_CHART_STATS_ERROR,
 } from '../types';
 
 export default (state, action) => {
@@ -43,6 +46,24 @@ export default (state, action) => {
       return {
         ...state,
         loadingCountryStats: false,
+        error: true,
+      };
+    // Country Chart
+    case GET_COUNTRY_CHART_STATS:
+      return {
+        ...state,
+        loadingCountryChartStats: true,
+      };
+    case   GET_COUNTRY_CHART_STATS_SUCCESS:
+      return {
+        ...state,
+        countryChartStats: action.payload,
+        loadingCountryChartStats: false,
+      };
+    case   GET_COUNTRY_CHART_STATS_ERROR:
+      return {
+        ...state,
+        loadingCountryChartStats: false,
         error: true,
       };
     default:

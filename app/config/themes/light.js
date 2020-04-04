@@ -1,4 +1,3 @@
-
 const light = {
   theme: {
     primary: '#3F4FC8',
@@ -12,6 +11,7 @@ const light = {
     textCardTitle: '#B3BCD0',
     separator: '#E2E2EB',
     white: '#FFFFFF',
+    red: '#FF5656',
   },
 }
 

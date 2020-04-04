@@ -11,6 +11,7 @@ const dark = {
     textCardTitle: '#B3BCD0',//
     separator: '#2A2B3A',
     white: '#FFFFFF',
+    red: '#FF5656',
   },
 }
 

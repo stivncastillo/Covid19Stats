@@ -1,10 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ActivityIndicator, RefreshControl, Text } from 'react-native'
+import { ActivityIndicator, RefreshControl, Text, View, Dimensions } from 'react-native'
 import { withTheme } from 'styled-components/native';
 import styled from 'styled-components/native';
 import CountryContext from '../../context/country/countryContext';
 import StatsContext from '../../context/stats/statsContext';
 import { ScrollContainer, ScreenSubtitle, Card, Indicator } from '../../components';
+
+import {
+  LineChart,
+} from "react-native-chart-kit";
 
 const IndicatorContainer = styled.View`
   flex-direction: row;
@@ -23,9 +27,12 @@ const Home = ({ navigation, theme }) => {
     globalStats,
     getGlobalStats,
     getCountryStats,
+    getCountryChartStats,
+    countryChartStats,
     countryStats,
     loadingGlobalStats,
     loadingCountryStats,
+    loadingCountryChartStats,
   } = statsContext;
 
   useEffect(() => {
@@ -48,6 +55,7 @@ const Home = ({ navigation, theme }) => {
 
     if (selectedCountry !== null) {
       getCountryStats(selectedCountry.name);
+      getCountryChartStats(selectedCountry.name);
     }
   }
 
@@ -57,6 +65,7 @@ const Home = ({ navigation, theme }) => {
 
   return (
     <ScrollContainer
+      contentContainerStyle={{ paddingBottom: 80 }}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
@@ -80,27 +89,75 @@ const Home = ({ navigation, theme }) => {
 
       {
         selectedCountry !== null &&
-          <Card title={selectedCountry !== null ? `${selectedCountry.name} Situation` : 'No Country Selected'} icon="edit" iconOnPress={() => navigation.navigate('SelectCountry')}>
-            {
-              loadingCountryStats ?
-                <ActivityIndicator size="small" color={theme.textCardTitle} />
-              :
-                countryStats !== null ?
-                  <>
-                    <IndicatorContainer>
-                      <Indicator name="Confirmed" number={countryStats.cases} />
-                      <Indicator name="Recovered" number={countryStats.recovered} />
-                    </IndicatorContainer>
-                    <IndicatorContainer>
-                      <Indicator name="Today Cases" number={countryStats.todayCases} />
-                      <Indicator name="Deaths" number={countryStats.deaths} />
-                    </IndicatorContainer>
-                  </>
+          <>
+            <Card title={selectedCountry !== null ? `${selectedCountry.name} Situation` : 'No Country Selected'} icon="edit" iconOnPress={() => navigation.navigate('SelectCountry')}>
+              {
+                loadingCountryStats ?
+                  <ActivityIndicator size="small" color={theme.textCardTitle} />
+                :
+                  countryStats !== null ?
+                    <>
+                      <IndicatorContainer>
+                        <Indicator name="Confirmed" number={countryStats.cases} />
+                        <Indicator name="Recovered" number={countryStats.recovered} />
+                      </IndicatorContainer>
+                      <IndicatorContainer>
+                        <Indicator name="Today Cases" number={countryStats.todayCases} />
+                        <Indicator name="Deaths" number={countryStats.deaths} />
+                      </IndicatorContainer>
+                    </>
+                  :
+                    <Text style={{ colot: theme.text }}>Sorry, no data to show.</Text>
+              }
+            </Card>
+
+            <Card title={selectedCountry !== null ? `Cases in ${selectedCountry.name} Last days` : 'No Country Selected'}>
+              {
+                loadingCountryChartStats ?
+                  <ActivityIndicator size="small" color={theme.textCardTitle} />
+                :
+                countryChartStats.labels.length > 0 && countryChartStats.datasets.length > 0 ?
+                  <View>
+                    <LineChart
+                      withDots={false}
+                      withVerticalLabels={false}
+                      // withInnerLines={false}
+                      withOuterLines={false}
+                      data={{
+                        labels: countryChartStats.labels,
+                        datasets: countryChartStats.datasets,
+                      }}
+                      width={Dimensions.get('window').width - 64}
+                      height={220}
+                      chartConfig={{
+                        backgroundColor: theme.backgroundAlt,
+                        backgroundGradientFrom: theme.backgroundAlt,
+                        backgroundGradientTo: theme.backgroundAlt,
+                        decimalPlaces: 0,
+                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        propsForDots: {
+                          r: '4',
+                          // strokeWidth: '3',
+                          // stroke: theme.red,
+                        },
+                        style: {
+                          padding: 0,
+                        },
+                      }}
+                      bezier
+                      style={{
+                        marginVertical: 8,
+                      }}
+                    />
+                  </View>
                 :
                   <Text style={{ colot: theme.text }}>Sorry, no data to show.</Text>
-            }
-          </Card>
+              }
+            </Card>
+          </>
       }
+
     </ScrollContainer>
   )
 }
