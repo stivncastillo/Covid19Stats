@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import StatsContext from './statsContext';
 import StatsReducer from './statsReducer';
+import dayjs from 'dayjs';
 
 import {
   GET_GLOBAL_STATS,
@@ -97,8 +98,8 @@ const StatsState = props => {
       const res = await axios.get(`https://corona.lmao.ninja/v2/historical/${country}`, config);
 
       const cases = formatData(res.data.timeline.cases, 'cases');
-      // const deaths = formatData(res.data.timeline.deaths, 'deaths');
-      // const recovered = formatData(res.data.timeline.recovered, 'recovered');
+      const deaths = formatData(res.data.timeline.deaths, 'deaths');
+      const recovered = formatData(res.data.timeline.recovered, 'recovered');
 
       dispatch({
         type: GET_COUNTRY_CHART_STATS_SUCCESS,
@@ -106,8 +107,8 @@ const StatsState = props => {
           labels: cases.labels,
           datasets: [
             {...cases.data},
-            // {...deaths.data},
-            // {...recovered.data},
+            {...deaths.data},
+            {...recovered.data},
           ],
         },
       });
@@ -123,7 +124,7 @@ const StatsState = props => {
   const formatData = (object, name) => {
     const sliced = Object.keys(object)
       .reverse()
-      // .slice(0, 7)
+      .slice(0, 7)
       .reduce((result, key) => {
         if (object[key] !== 0) {
           result[key] = object[key];
@@ -141,7 +142,8 @@ const StatsState = props => {
     let data = {data: [], color};
 
     Object.keys(sliced).reverse().map((item, index) => {
-      labels[index] = item;
+      const formatDate = dayjs(item, 'M/D/YY').format('D/MMM');
+      labels[index] = formatDate;
       data.data[index] = sliced[item];
     })
 

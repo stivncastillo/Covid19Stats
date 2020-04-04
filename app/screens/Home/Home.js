@@ -1,20 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ActivityIndicator, RefreshControl, Text, View, Dimensions } from 'react-native'
 import { withTheme } from 'styled-components/native';
+import { LineChart } from 'react-native-chart-kit';
 import styled from 'styled-components/native';
 import CountryContext from '../../context/country/countryContext';
 import StatsContext from '../../context/stats/statsContext';
 import { ScrollContainer, ScreenSubtitle, Card, Indicator } from '../../components';
 
-import {
-  LineChart,
-} from "react-native-chart-kit";
-
 const IndicatorContainer = styled.View`
   flex-direction: row;
   flex: 1;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: 0px;
 `;
 
 const Home = ({ navigation, theme }) => {
@@ -83,7 +80,7 @@ const Home = ({ navigation, theme }) => {
                   <Indicator name="Deaths" number={globalStats.deaths} />
                 </IndicatorContainer>
             :
-              <Text style={{ colot: theme.text }}>Sorry, no data to show.</Text>
+              <Text style={{ color: theme.text }}>Sorry, no data to show.</Text>
         }
       </Card>
 
@@ -107,7 +104,7 @@ const Home = ({ navigation, theme }) => {
                       </IndicatorContainer>
                     </>
                   :
-                    <Text style={{ colot: theme.text }}>Sorry, no data to show.</Text>
+                    <Text style={{ color: theme.text }}>Sorry, no data to show.</Text>
               }
             </Card>
 
@@ -119,9 +116,10 @@ const Home = ({ navigation, theme }) => {
                 countryChartStats.labels.length > 0 && countryChartStats.datasets.length > 0 ?
                   <View>
                     <LineChart
-                      withDots={false}
-                      withVerticalLabels={false}
+                      // withDots={false}
+                      // withVerticalLabels={false}
                       // withInnerLines={false}
+                      verticalLabelRotation={45}
                       withOuterLines={false}
                       data={{
                         labels: countryChartStats.labels,
@@ -138,21 +136,20 @@ const Home = ({ navigation, theme }) => {
                         labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                         propsForDots: {
                           r: '4',
-                          // strokeWidth: '3',
-                          // stroke: theme.red,
                         },
                         style: {
-                          padding: 0,
+                          // padding: 0,
                         },
                       }}
                       bezier
                       style={{
                         marginVertical: 8,
+                        paddingBottom: 16,
                       }}
                     />
                   </View>
                 :
-                  <Text style={{ colot: theme.text }}>Sorry, no data to show.</Text>
+                  <Text style={{ color: theme.text }}>Sorry, no data to show.</Text>
               }
             </Card>
           </>
